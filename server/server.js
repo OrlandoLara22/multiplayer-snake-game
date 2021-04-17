@@ -2,14 +2,13 @@
    so that the server refreshes when I make changes. This way I don't have to
    constantly kill and restart the server with every change. */
 
-/* const io = require('socket.io')({
+const io = require('socket.io')({
     cors: {
-        origin: "http://localhost:8080",
+        origin: "https://zealous-lamarr-1caab1.netlify.app",
         credentials: true
     },
     allowEIO3: true // This seems to be neccesary for socket.IO v2 clients compatability
-}); */
-const io = require('socket.io')({allowEIO3});
+});
 
 const { initGame, gameLoop, getUpdatedVelocity } = require('./game');
 const { FRAME_RATE } = require('./constants');
