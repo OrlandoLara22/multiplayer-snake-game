@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Multiplayer Snake</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <style>
+        #multiplayerScreen {
+            display: none;
+        }
+        #gameScreen {
+            display: none;
+        }
+        .btn-group button {
+            border: 2px solid green; /* Green border */
+        }
+    </style>
+</head>
+<body>
+    <section class="vh-100">
+        <div class="container h-100">
+            
+            <div id="gameModeSelectionScreen" class="h-100">
+                <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                    <h1>Select Game Mode</h1>
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="singlePlayerButton"
+                    >
+                        Single Player
+                    </button>
+                    <div>-</div>
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="multiplayerButton"
+                    >
+                        Multiplayer
+                    </button>
+                </div>
+            </div>
+            
+            <div id="multiplayerScreen" class="h-100">
+                <div class="d-flex flex-column align-items-center justify-content-center h-100">
+                    <h1>Multiplayer Snake</h1>
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="newGameButton"
+                    >
+                        Create New Game
+                    </button>
+                    <div>OR</div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter Game Code" id="gameCodeInput"/>
+                    </div>
+                    <button
+                        type="submit"
+                        class="btn btn-success"
+                        id="joinGameButton"
+                    >
+                        Join Game
+                    </button>
+                    <h1 id="gameCodeDisplay"></h1>
+                </div>
+            </div>
+
+            <div id="gameScreen" class="h-100">
+                <div class="d-flex flex-column h-100">
+                    <h2 style="text-align:left;" id="playerOneScoreText">Player One: <span id="playerOneScoreValue"></span>
+                        <span style="float:right;" id="playerTwoScoreText">Player Two: <span id="playerTwoScoreValue"></span></span>
+                    </h2>
+                
+                    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                        <h1 id="gameWinnerDisplay"></h1>
+                        <div class="btn-group">
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                                id="startGameButton"
+                                >
+                                    Start Game
+                            </button>
+                            <button
+                                type="submit"
+                                class="btn btn-success"
+                                id="resetGameButton"
+                                >
+                                    Reset Game
+                            </button>
+                        </div>
+                        <canvas id="canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>   
+    <script src="index.js"></script>
+</body>
+</html>
