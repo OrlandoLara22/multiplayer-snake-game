@@ -11,7 +11,8 @@ const FOOD_COLOR = '#CB3535';
 // Since I already have the socket IO library in the HTML so I can use the
 // gloabl IO object
 
-const socket = io('http://localhost:3000');
+const socket = io('https://multiplayer-snake-game-backend.herokuapp.com/');
+//const socket = io('http://localhost:3000');
 //const socket = io('http://fb48d22cae78.ngrok.io');
 
 socket.on('init', handleInit); // When we hear the init event we call function handleInit
