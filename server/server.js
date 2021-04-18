@@ -4,7 +4,8 @@
 
 const io = require('socket.io')({
     cors: {
-        origin: "https://zealous-lamarr-1caab1.netlify.app",
+        //origin: "https://zealous-lamarr-1caab1.netlify.app",
+        origin: 'http://localhost:8080',
         credentials: true
     },
     allowEIO3: true // This seems to be neccesary for socket.IO v2 clients compatability
@@ -26,6 +27,7 @@ io.on('connection', client => {
     client.on('joinGame', handleJoinGame);
     client.on('startGame', handleStartGame);
     client.on('resetGame', handleResetGame);
+    client.on('disconnect', handleDisconnect);
 
     function handleKeydown(keyCode){
         const roomName = clientRooms[client.id];
@@ -122,6 +124,18 @@ io.on('connection', client => {
         }
         
         io.sockets.in(roomName).emit('init', JSON.stringify(state[roomName]));
+    }
+
+    function handleDisconnect(){
+        console.log('Client Disconnected: ' + client.id );
+        if(clientRooms.hasOwnProperty(client.id)){
+            roomName = clientRooms[client.id];
+            if(gameLoops.hasOwnProperty(roomName)){
+                delete gameLoops[roomName];
+            }
+            delete clientRooms[client.id];
+        }
+        
     }
 });
 
