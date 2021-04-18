@@ -4,8 +4,8 @@
 
 const io = require('socket.io')({
     cors: {
-        //origin: "https://zealous-lamarr-1caab1.netlify.app",
-        origin: 'http://localhost:8080',
+        origin: "https://zealous-lamarr-1caab1.netlify.app",
+        //origin: 'http://localhost:8080',
         credentials: true
     },
     allowEIO3: true // This seems to be neccesary for socket.IO v2 clients compatability
