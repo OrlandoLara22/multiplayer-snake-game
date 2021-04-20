@@ -2,7 +2,7 @@ const { GRID_SIZE, PLAYER_ONE, PLAYER_TWO, MULTIPLAYER_SCORE_LIMIT, SINGLE_PLAYE
 
 module.exports = {
     initGame,
-    gameLoop,
+    runGameLoop,
     getUpdatedVelocity,
 }
 
@@ -27,7 +27,7 @@ function createGameState() {
     };
 }
 
-function gameLoop(state){
+function runGameLoop(state){
     if (!state) {
         return;
     }

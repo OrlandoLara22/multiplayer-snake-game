@@ -16,6 +16,7 @@ const socket = io('https://multiplayer-snake-game-backend.herokuapp.com/');
 //const socket = io('http://fb48d22cae78.ngrok.io');
 
 socket.on('init', handleInit); // When we hear the init event we call function handleInit
+socket.on('gameCounter', handleGameCounter);
 socket.on('gameState', handleGameState);
 socket.on('gameOver', handleGameOver);
 socket.on('gameCode', handleGameCode);
@@ -49,7 +50,6 @@ resetGameBtn.addEventListener('click', resetGame);
 
 let canvas, ctx;
 let playerNumber;
-let gameActive = false;
 let roomName;
 
 function singlePlayerMode() {
@@ -123,7 +123,17 @@ function goToMultiplayerMenu() {
 
     playerNumber = null;
     gameCodeInput.value = "";
-    gameCodeDisplay.innerText = "";   
+    gameCodeDisplay.innerText = "";
+}
+
+function goToGameModeSelectionMenu() {
+    gameModeSelectionScreen.style.display = 'block';
+    multiplayerScreen.style.display = 'none';
+    gameScreen.style.display = 'none';
+
+    playerNumber = null;
+    gameCodeInput.value = "";
+    gameCodeDisplay.innerText = "";
 }
 
 function handleInit(gameState) {
@@ -134,7 +144,7 @@ function handleInit(gameState) {
     multiplayerScreen.style.display = 'none';
     gameScreen.style.display = 'block';
 
-    gameWinnerDisplay.innerText = "GAME ON";
+    gameWinnerDisplay.innerText = "Click 'Start Game' to Begin";
     gameWinnerDisplay.style.color = 'black';
     playerOneScoreText.style.color = SNAKE_BODY_COLOR[0];
     playerOneScoreValue.style.color = SNAKE_HEAD_COLOR[0];
@@ -157,25 +167,27 @@ function handleInit(gameState) {
 
     paintGame(gameState);
     document.addEventListener('keydown', keydown);
-    gameActive = true;
 }
 
 function handlePlayerNumber(number){
     playerNumber = number;
 }
 
-function handleGameState(gameState){
-    if(!gameActive){
-        return;
+function handleGameCounter(data){
+    data = JSON.parse(data);
+    gameWinnerDisplay.innerText = "Game Starting in: " + data.counter;
+
+    if (data.counter === 0){
+        gameWinnerDisplay.innerText = "GAME ON";
     }
+}
+
+function handleGameState(gameState){
     gameState = JSON.parse(gameState);
     requestAnimationFrame(() => paintGame(gameState));
 }
 
 function handleGameOver(data) {
-    if(!gameActive){
-        return;
-    }
     data = JSON.parse(data);
 
     switch (data.loser) {
@@ -191,7 +203,6 @@ function handleGameOver(data) {
             gameWinnerDisplay.innerText = "You Win!";
             gameWinnerDisplay.style.color = 'green';
     }
-    gameActive = false;
     document.removeEventListener('keydown', keydown);
 }
 
@@ -202,11 +213,11 @@ function handleGameCode(gameCode) {
 }
 
 function handleUnknownGame() {
-    goToMultiplayerMenu();
-    alert('Unkown game code');
+    alert('Game room not valid');
+    goToGameModeSelectionMenu();
 }
 
 function handleTooManyPlayers() {
-    goToMultiplayerMenu();
     alert('This game is already in progress');
+    goToGameModeSelectionMenu();
 }
