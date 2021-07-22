@@ -2,6 +2,7 @@
 // To run this just run the following command from the frontend directory:
 // npx live-server
 const BG_COLOR = '#231f20';
+const GRID_LINE_COLOR = '#2D292A';
 const SNAKE_BODY_COLOR = ['#F48FB1', '#c2c2c2'];
 const SNAKE_HEAD_COLOR = ['#F06292', '#757575'];
 const FOOD_COLOR = '#CB3535';
@@ -89,6 +90,14 @@ function paintGame(state){
     const food = state.food;
     const gridsize = state.gridsize;
     const size = canvas.width / gridsize; // This is the pixel size per square game 600px/20 sqaures = 30px per square
+
+    //Draw the row and column separators
+    for(let idx=1; idx < gridsize; idx++)
+    {
+        ctx.fillStyle = GRID_LINE_COLOR;
+        ctx.fillRect((idx*size)-1, 0, 3, canvas.height);    //Draws the columns
+        ctx.fillRect(0, (idx*size)-1, canvas.width, 3);     //Draws the rows
+    }
 
     ctx.fillStyle = FOOD_COLOR;
     ctx.fillRect(food.x * size, food.y * size, size, size);
